@@ -1,0 +1,18 @@
+{
+  "name": "RTA-app",
+  "description": "RTA mondo registration and renewal for vehicles",
+  "main": "index.js",
+  "authors": [
+    "Blockchain Mondo Blockchai Mondo"
+  ],
+  "license": "Apache2",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

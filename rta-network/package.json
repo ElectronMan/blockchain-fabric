@@ -1,0 +1,11 @@
+{
+  "name": "rta-network",
+  "version": "1.0.7",
+  "description": "Business network for RTA for car registration and renewal and life cycle",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

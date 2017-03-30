@@ -1,0 +1,9 @@
+{
+
+  "RTA-app" : {
+    "connectionProfileName":"myProfile",
+    "networkIdentifier":"digitalVehicleAssetNetwork",
+    "enrollmentId":"WebAppAdmin",
+    "enrollmentSecret":"DJY27pEnl16d"
+  }
+}

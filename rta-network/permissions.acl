@@ -1,0 +1,45 @@
+/**
+ * Access Control List for the RTA Vehicle Network.
+ */
+
+rule VehicleOwnerRead {
+    description: "Allow the owner of a vehicle read access to their vehicles"
+    participant(o): "digitalVehicleAssetNetwork.Owner"
+    operation: READ
+    resource(v): "digitalVehicleAssetNetwork.Vehicle"
+    condition: (v.owner.getIdentifier() === o.getIdentifier())
+    action: ALLOW
+}
+
+rule VehicleOwnerUpdate {
+    description: "Allow the owner of a vehicle update access to their vehicles"
+    participant(o): "digitalVehicleAssetNetwork.Owner"
+    operation: UPDATE
+    resource(v): "digitalVehicleAssetNetwork.Vehicle"
+    condition: (v.owner.getIdentifier() === o.getIdentifier())
+    action: ALLOW
+}
+
+rule Regulator {
+    description: "Allow the regulator full access to the network"
+    participant: "digitalVehicleAssetNetwork.Regulator"
+    operation: ALL
+    resource: "digitalVehicleAssetNetwork"
+    action: ALLOW
+}
+
+rule CustomsRead {
+    description: "Allow the customs read access to the vehicles"
+    participant: "digitalVehicleAssetNetwork.Custom"
+    operation: READ
+    resource: "digitalVehicleAssetNetwork.Vehicle"
+    action: ALLOW
+}
+
+rule CustomsUpdate {
+    description: "Allow the customs update access to the vehicles"
+    participant: "digitalVehicleAssetNetwork.Custom"
+    operation: UPDATE
+    resource: "digitalVehicleAssetNetwork.Vehicle"
+    action: ALLOW
+}

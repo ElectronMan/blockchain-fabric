@@ -1,0 +1,169 @@
+/**
+  * A business network for managing the life cycle of
+  * vehicles for the RTA for registration and renewal
+  */
+
+namespace digitalVehicleAssetNetwork
+
+/**
+ * The status of our vehicle
+ */
+enum vehicleState {
+  o WAITING_CUSTOMS_CLEARANCE
+  o FOR_SALE
+  o SOLD
+  o REGISTERED
+}
+
+/**
+ * A vehicle being tracked as an asset on the ledger
+ */
+asset Vehicle identified by chassisNumber {
+  o String chassisNumber regex=/^[1-9][0-9]{14}$/
+  o String make default="Toyota"
+  o String model default="Yaris"
+  o String licensePlate optional
+  o String eTrafficNumber optional
+  o vehicleState state
+  --> Owner owner
+  o SalesContract salesContract optional
+  o InsuranceContract insuranceContract optional
+  o LoanContract loanContract optional
+}
+
+/**
+ * A sales contract being tracked as an asset on the ledger
+ */
+asset SalesContract identified by salesID {
+  o String    salesID
+  o Integer price default=20000 range=[0,]
+  --> Owner    buyer
+  --> Owner    seller
+  --> Vehicle vehicle
+}
+
+
+/**
+ * An insurance contract being tracked as an asset on the ledger
+ */
+asset InsuranceContract identified by insuranceID {
+  o String    insuranceID
+  o Integer   price default=2000 range=[0,]
+  --> Owner    owner
+  --> Insurance    insurer
+  --> Vehicle vehicle
+}
+
+/**
+ * A loan contract being tracked as an asset on the ledger
+ */
+asset LoanContract identified by loanID {
+  o String    loanID
+  --> Owner   lendee
+  --> Bank    lender
+  --> Vehicle vehicle
+}
+
+/**
+ * A concept for a simple street address
+ */
+concept Address {
+  o String city optional
+  o String country default="United Arab Emirates"
+  o String street optional
+  o String zip optional
+}
+
+/**
+ * An owner is a type of participant in the network
+ * We have two types of Owners private individuals and dealerships
+ */
+participant Owner identified by emiratesID {
+  o String emiratesID regex=/^[1-9][0-9]{14}$/
+  o String email
+  o String firstName
+  o String lastName
+  o String mobileNumber
+  o Address address
+  o String passportNumber
+  o String licenseNumber
+}
+
+/**
+ * An abstract participant type in this business network
+ */
+abstract participant Entity identified by email {
+  o String email
+  o String name
+  o Address address
+}
+
+/**
+ * A regulator is a type of participant in the network
+ */
+participant Regulator extends Entity {
+
+}
+
+/**
+ * A customs is a type of participant in the network
+ */
+participant Customs extends Entity {
+
+}
+
+/**
+ * A bank is a type of participant in the network
+ */
+participant Bank extends Entity {
+
+}
+
+/**
+ * An insurer is a type of participant in the network
+ */
+participant Insurance extends Entity {
+
+}
+
+transaction clearCustoms identified by transactionID {
+  o String transactionID
+  --> Vehicle vehicle
+}
+
+transaction buyVehicle identified by transactionID {
+  o String transactionID
+  o Integer price range=[0,]
+  --> Owner    buyer
+  --> Owner    seller
+  --> Vehicle vehicle
+}
+
+transaction buyInsurance identified by transactionID {
+  o String transactionID
+  o Integer price range=[0,]
+  --> Owner    owner
+  --> Insurance    insurer
+  --> Vehicle vehicle
+}
+
+transaction getABankLoan identified by transactionID {
+  o String transactionID
+  --> Owner   lendee
+  --> Bank    lender
+  --> Vehicle vehicle
+}
+
+transaction register identified by transactionID {
+  o String transactionID
+  o String licensePlate
+  o String eTrafficNumber
+  --> Vehicle vehicle
+}
+
+/**
+ * JUST FOR INITIALIZING A DEMO
+ */
+transaction setupDemo identified by transactionID {
+  o String transactionID
+}
