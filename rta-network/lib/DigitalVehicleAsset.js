@@ -62,7 +62,15 @@ function onBuyInsurance(buyInsurance) {
     var factory = getFactory();
     // Create the insurance contract concept.
     var insuranceContract = factory.newConcept('digitalVehicleAssetNetwork', 'InsuranceContract');
+    insuranceContract.policyNo = buyInsurance.policyNo;
+    insuranceContract.type = buyInsurance.type;
     insuranceContract.price = buyInsurance.price;
+    // set expiry date a year from now plus 1 month
+    // so 13 months
+    let expDate = buyInsurance.timestamp;
+    expDate.setFullYear(expDate.getFullYear() + 1);
+    expDate.setMonth(expDate.getMonth() + 1);
+    insuranceContract.expiryDate = expDate;
     insuranceContract.vehicle = vehicle;
     insuranceContract.buyer = buyInsurance.buyer;
     insuranceContract.insurer = buyInsurance.insurer;
@@ -111,9 +119,19 @@ function onRegister(register) {
         throw new Error('Vehicle is not SOLD: ' + vehicle.state);
     }
     vehicle.state = 'REGISTERED';
-    vehicle.owner = vehicle.salesContract.buyer;
-    vehicle.licensePlate = register.licensePlate;
-    vehicle.eTrafficNumber = register.eTrafficNumber;
+    var factory = getFactory();
+    // Create the vehicle License concept
+    var vehicleLicense = factory.newConcept('digitalVehicleAssetNetwork', 'VehicleLicense');
+    vehicleLicense.eTrafficNumber = register.eTrafficNumber;
+    vehicleLicense.trafficPlateNo = register.trafficPlateNo;
+    vehicleLicense.placeOfIssue = 'DUBAI';
+    // set expiry date a year from now
+    let expDate = register.timestamp;
+    expDate.setFullYear(expDate.getFullYear() + 1);
+    vehicleLicense.expDate = expDate;
+    vehicleLicense.owner = vehicle.salesContract.buyer;
+
+    vehicle.vehicleLicense = vehicleLicense;
 
     return getAssetRegistry('digitalVehicleAssetNetwork.Vehicle')
         .then(function(result) {
@@ -142,6 +160,7 @@ function setupDemo(setupDemo) {
     buyer.address = buyerAddress;
     buyer.passportNumber = '22222';
     buyer.carLicenseNumber = '333333';
+    buyer.nationality = 'Taboulistanian';
 
     // create the Dealer
     let dealer = factory.newResource(NS, 'Dealership', '444444');
@@ -187,11 +206,17 @@ function setupDemo(setupDemo) {
     insurance.name = 'Hilal';
 
     // create the vehicle
-    let vehicle = factory.newResource(NS, 'Vehicle', '123456789123456');
-    vehicle.dealer = factory.newRelationship(NS, 'Dealership', '444444');
-    vehicle.make = 'Toyota';
-    vehicle.model = 'Yaris';
+    let vehicle = factory.newResource(NS, 'Vehicle', 'ABCDE123456789ABC');
+    vehicle.engineNo = 'CK419234KD';
+    vehicle.manufacturingYear = '2011';
+    vehicle.countryOfOrigin = 'South Korea';
+    vehicle.vehicleType = 'Toyota Yaris';
+    vehicle.vehicleClassification = 'SALOON';
+    vehicle.color = 'red';
+    vehicle.grossVehicleWeight = 1800;
+    vehicle.emptyWeight = 1600;
     vehicle.state = 'WAITING_CUSTOMS_CLEARANCE';
+    vehicle.dealer = factory.newRelationship(NS, 'Dealership', '444444');
 
     return getParticipantRegistry(NS + '.PrivateIndividual')
         .then(function(privateIndividualRegistry) {

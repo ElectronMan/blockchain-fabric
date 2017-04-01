@@ -8,7 +8,7 @@ namespace digitalVehicleAssetNetwork
 /**
  * The status of our vehicle
  */
-enum vehicleState {
+enum VehicleState {
   o WAITING_CUSTOMS_CLEARANCE
   o FOR_SALE
   o SOLD
@@ -16,20 +16,56 @@ enum vehicleState {
 }
 
 /**
+ * The applicable places of issuing a vehicle license
+ */
+enum Emirates {
+  o ABU_DHABI
+  o DUBAI
+  o SHARJAH
+}
+
+/**
+ * The different types of insurance available
+ */
+enum InsuranceType {
+  o THIRD_PARTY
+  o FULL
+}
+
+/**
+ * The different types of vehicle classes
+ */
+enum VehicleClassification {
+  o SALOON
+}
+
+/**
  * A vehicle being tracked as an asset on the ledger
  */
-asset Vehicle identified by chassisNumber {
-  o String chassisNumber regex=/^[1-9][0-9]{14}$/
-  o String make
-  o String model
-  o String licensePlate optional
-  o String eTrafficNumber optional
-  o vehicleState state
-  --> Dealership dealer
-  --> PrivateIndividual owner optional
+asset Vehicle identified by chassisNo {
+  o String chassisNo regex=/^[a-zA-z0-9]{17}$/
+  o String engineNo
+  o String manufacturingYear // this shows up as model on vehicle license
+  o String countryOfOrigin
+  o String vehicleType // is the make and model of the car like Toyota Yaris
+  o VehicleClassification vehicleClassification
+  o String color
+  o Integer grossVehicleWeight range=[0,]
+  o Integer emptyWeight range=[0,]
+  o VehicleState state
+  o VehicleLicense vehicleLicense optional
   o SalesContract salesContract optional
   o InsuranceContract insuranceContract optional
   o LoanContract loanContract optional
+  --> Dealership dealer
+}
+
+concept VehicleLicense {
+  o String eTrafficNumber
+  o String trafficPlateNo
+  o Emirates placeOfIssue
+  o DateTime expDate
+  --> PrivateIndividual owner
 }
 
 /**
@@ -47,7 +83,10 @@ concept SalesContract {
  * An insurance contract being tracked as a concept
  */
 concept InsuranceContract {
+  o String policyNo
+  o InsuranceType type
   o Integer   price range=[0,]
+  o DateTime expiryDate
   --> PrivateIndividual    buyer
   --> Insurance    insurer
   --> Vehicle vehicle
@@ -88,6 +127,7 @@ participant PrivateIndividual identified by emiratesID extends Owner  {
   o String lastName
   o String passportNumber
   o String carLicenseNumber
+  o String nationality
 }
 
 participant Dealership identified by commercialLicenseNumber extends Owner  {
@@ -148,6 +188,8 @@ transaction buyVehicle identified by transactionID {
 transaction buyInsurance identified by transactionID {
   o String transactionID
   o Integer price range=[0,]
+  o String policyNo
+  o InsuranceType type
   --> PrivateIndividual    buyer
   --> Insurance    insurer
   --> Vehicle vehicle
@@ -162,7 +204,7 @@ transaction getABankLoan identified by transactionID {
 
 transaction register identified by transactionID {
   o String transactionID
-  o String licensePlate
+  o String trafficPlateNo
   o String eTrafficNumber
   --> Vehicle vehicle
 }
