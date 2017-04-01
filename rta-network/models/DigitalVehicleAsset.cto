@@ -20,46 +20,44 @@ enum vehicleState {
  */
 asset Vehicle identified by chassisNumber {
   o String chassisNumber regex=/^[1-9][0-9]{14}$/
-  o String make default="Toyota"
-  o String model default="Yaris"
+  o String make
+  o String model
   o String licensePlate optional
   o String eTrafficNumber optional
   o vehicleState state
-  --> Owner owner
+  --> Dealership dealer
+  --> PrivateIndividual owner optional
   o SalesContract salesContract optional
   o InsuranceContract insuranceContract optional
   o LoanContract loanContract optional
 }
 
 /**
- * A sales contract being tracked as an asset on the ledger
+ * A sales contract being tracked as a concept
  */
-asset SalesContract identified by salesID {
-  o String    salesID
-  o Integer price default=20000 range=[0,]
-  --> Owner    buyer
-  --> Owner    seller
+concept SalesContract {
+  o Integer price range=[0,]
+  --> PrivateIndividual    buyer
+  --> Dealership    seller
   --> Vehicle vehicle
 }
 
 
 /**
- * An insurance contract being tracked as an asset on the ledger
+ * An insurance contract being tracked as a concept
  */
-asset InsuranceContract identified by insuranceID {
-  o String    insuranceID
-  o Integer   price default=2000 range=[0,]
-  --> Owner    owner
+concept InsuranceContract {
+  o Integer   price range=[0,]
+  --> PrivateIndividual    buyer
   --> Insurance    insurer
   --> Vehicle vehicle
 }
 
 /**
- * A loan contract being tracked as an asset on the ledger
+ * A loan contract being tracked as a concept
  */
-asset LoanContract identified by loanID {
-  o String    loanID
-  --> Owner   lendee
+concept LoanContract {
+  --> PrivateIndividual   lendee
   --> Bank    lender
   --> Vehicle vehicle
 }
@@ -68,25 +66,33 @@ asset LoanContract identified by loanID {
  * A concept for a simple street address
  */
 concept Address {
-  o String city optional
+  o String city default="Dubai" optional
   o String country default="United Arab Emirates"
   o String street optional
-  o String zip optional
+  o String postOfficeBox regex=/^[1-9][0-9]{4}$/ optional
 }
 
 /**
  * An owner is a type of participant in the network
  * We have two types of Owners private individuals and dealerships
  */
-participant Owner identified by emiratesID {
-  o String emiratesID regex=/^[1-9][0-9]{14}$/
-  o String email
-  o String firstName
-  o String lastName
+abstract participant Owner {
+  o String email optional
   o String mobileNumber
   o Address address
+}
+
+participant PrivateIndividual identified by emiratesID extends Owner  {
+  o String emiratesID regex=/^[1-9][0-9]{14}$/
+  o String firstName
+  o String lastName
   o String passportNumber
-  o String licenseNumber
+  o String carLicenseNumber
+}
+
+participant Dealership identified by commercialLicenseNumber extends Owner  {
+  o String name
+  o String commercialLicenseNumber
 }
 
 /**
@@ -134,22 +140,22 @@ transaction clearCustoms identified by transactionID {
 transaction buyVehicle identified by transactionID {
   o String transactionID
   o Integer price range=[0,]
-  --> Owner    buyer
-  --> Owner    seller
+  --> PrivateIndividual    buyer
+  --> Dealership    seller
   --> Vehicle vehicle
 }
 
 transaction buyInsurance identified by transactionID {
   o String transactionID
   o Integer price range=[0,]
-  --> Owner    owner
+  --> PrivateIndividual    buyer
   --> Insurance    insurer
   --> Vehicle vehicle
 }
 
 transaction getABankLoan identified by transactionID {
   o String transactionID
-  --> Owner   lendee
+  --> PrivateIndividual   lendee
   --> Bank    lender
   --> Vehicle vehicle
 }
