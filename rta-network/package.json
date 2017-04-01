@@ -1,6 +1,6 @@
 {
   "name": "rta-network",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "Business network for RTA for car registration and renewal and life cycle",
   "main": "index.js",
   "scripts": {

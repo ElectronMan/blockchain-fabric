@@ -34,10 +34,10 @@ function onBuyVehicle(buyVehicle) {
     }
     vehicle.state = 'SOLD';
     var factory = getFactory();
-    // Create the sales contract asset.
-    var salesContract = factory.newResource('digitalVehicleAssetNetwork', 'SalesContract', 'SALE_001');
+    // Create the sales contract concept
+    var salesContract = factory.newConcept('digitalVehicleAssetNetwork', 'SalesContract');
     salesContract.price = buyVehicle.price;
-    salesContract.vehicle = buyVehicle.vehicle;
+    salesContract.vehicle = vehicle;
     salesContract.buyer = buyVehicle.buyer;
     salesContract.seller = buyVehicle.seller;
     vehicle.salesContract = salesContract;
@@ -45,13 +45,6 @@ function onBuyVehicle(buyVehicle) {
         .then(function(vehicleRegistry) {
             // save the updated vehicle
             return vehicleRegistry.update(vehicle);
-        })
-        .then(function() {
-            return getAssetRegistry('digitalVehicleAssetNetwork.SalesContract');
-        })
-        .then(function(salesContractRegistry) {
-            // add the sales contract to the registry
-            return salesContractRegistry.add(salesContract);
         });
 }
 
@@ -67,29 +60,48 @@ function onBuyInsurance(buyInsurance) {
         throw new Error('Vehicle not SOLD: ' + vehicle.state);
     }
     var factory = getFactory();
-    // Create the insurance contract asset.
-    var insuranceContract = factory.newResource('digitalVehicleAssetNetwork', 'InsuranceContract', 'INSURANCE_001');
+    // Create the insurance contract concept.
+    var insuranceContract = factory.newConcept('digitalVehicleAssetNetwork', 'InsuranceContract');
     insuranceContract.price = buyInsurance.price;
     insuranceContract.vehicle = vehicle;
-    insuranceContract.owner = buyInsurance.owner;
+    insuranceContract.buyer = buyInsurance.buyer;
     insuranceContract.insurer = buyInsurance.insurer;
     vehicle.insuranceContract = insuranceContract;
     return getAssetRegistry('digitalVehicleAssetNetwork.Vehicle')
         .then(function(vehicleRegistry) {
             // save the vehicle
             return vehicleRegistry.update(vehicle);
-        })
-        .then(function() {
-            return getAssetRegistry('digitalVehicleAssetNetwork.InsuranceContract');
-        })
-        .then(function(insuranceContractRegistry) {
-            // add the sales contract to the registry
-            return insuranceContractRegistry.add(insuranceContract);
         });
 }
+
 /**
- * Process a vehicle that is held for sale
- * @param {digitalVehicleAssetNetwork.register} register the vehicle to be sold
+ * Get a car loan from bank
+ * @param {digitalVehicleAssetNetwork.getABankLoan} getABankLoan
+ * @transaction
+ */
+function onGetABankLoan(getABankLoan) {
+    console.log('### onGetABankLoan ' + getABankLoan.toString());
+    var vehicle = getABankLoan.vehicle;
+    if (vehicle.state !== 'SOLD') {
+        throw new Error('Vehicle not SOLD: ' + vehicle.state);
+    }
+    var factory = getFactory();
+    // Create the loan contract concept
+    var loanContract = factory.newConcept('digitalVehicleAssetNetwork', 'LoanContract');
+    loanContract.vehicle = vehicle;
+    loanContract.lendee = getABankLoan.lendee;
+    loanContract.lender = getABankLoan.lender;
+    vehicle.loanContract = loanContract;
+    return getAssetRegistry('digitalVehicleAssetNetwork.Vehicle')
+        .then(function(vehicleRegistry) {
+            // save the vehicle
+            return vehicleRegistry.update(vehicle);
+        });
+}
+
+/**
+ * Register a vehicle with the RTA
+ * @param {digitalVehicleAssetNetwork.register} register the vehicle to be registered
  * @transaction
  */
 function onRegister(register) {
@@ -119,33 +131,34 @@ function setupDemo(setupDemo) {
     let NS = 'digitalVehicleAssetNetwork';
 
     // create the Buyer
-    let buyer = factory.newResource(NS, 'Owner', '111111111111111');
+    let buyer = factory.newResource(NS, 'PrivateIndividual', '111111111111111');
     let buyerAddress = factory.newConcept(NS, 'Address');
     buyerAddress.country = 'United Arab Emirates';
-    buyer.email = 'buyer@email.com';
-    buyer.firstName = 'Buyer';
-    buyer.lastName = 'Buyer';
+    buyerAddress.city = 'Dubai';
+    buyer.email = 'hussam.blockhain@gmail.com';
+    buyer.firstName = 'Hussam';
+    buyer.lastName = 'Blockhain';
     buyer.mobileNumber = '971551111111';
     buyer.address = buyerAddress;
     buyer.passportNumber = '22222';
-    buyer.licenseNumber = '333333';
+    buyer.carLicenseNumber = '333333';
 
-    // create the Seller
-    let seller = factory.newResource(NS, 'Owner', '222222222222222');
-    let sellerAddress = factory.newConcept(NS, 'Address');
-    sellerAddress.country = 'United Arab Emirates';
-    seller.email = 'seller@email.com';
-    seller.firstName = 'Seller';
-    seller.lastName = 'Seller';
-    seller.mobileNumber = '971552222222';
-    seller.address = sellerAddress;
-    seller.passportNumber = '333333';
-    seller.licenseNumber = '444444';
+    // create the Dealer
+    let dealer = factory.newResource(NS, 'Dealership', '444444');
+    let dealerAddress = factory.newConcept(NS, 'Address');
+    dealerAddress.country = 'United Arab Emirates';
+    dealerAddress.city = 'Dubai';
+    dealerAddress.street = 'Sheikh Zayed Road between Interchange 2 and 3 next to Noor Islamic Bank Metro Station';
+    dealerAddress.postOfficeBox = '10773';
+    dealer.name = 'Al Nabooda Automobiles';
+    dealer.mobileNumber = '97147053333';
+    dealer.address = dealerAddress;
 
     // create the regulator
     let regulator = factory.newResource(NS, 'Regulator', 'rta@email.com');
     let regulatorAddress = factory.newConcept(NS, 'Address');
     regulatorAddress.country = 'United Arab Emirates';
+    regulatorAddress.city = 'Dubai';
     regulator.address = regulatorAddress;
     regulator.name = 'RTA';
 
@@ -153,6 +166,7 @@ function setupDemo(setupDemo) {
     let customs = factory.newResource(NS, 'Customs', 'dubaiports@email.com');
     let customsAddress = factory.newConcept(NS, 'Address');
     customsAddress.country = 'United Arab Emirates';
+    customsAddress.city = 'Dubai';
     customs.address = customsAddress;
     customs.name = 'Dubai Ports';
 
@@ -160,61 +174,70 @@ function setupDemo(setupDemo) {
     let bank = factory.newResource(NS, 'Bank', 'HSBC@email.com');
     let bankAddress = factory.newConcept(NS, 'Address');
     bankAddress.country = 'United Arab Emirates';
+    bankAddress.city = 'Dubai';
     bank.address = bankAddress;
     bank.name = 'HSBC';
 
-    // create the insurace
+    // create the insurance
     let insurance = factory.newResource(NS, 'Insurance', 'hilal@email.com');
     let insuranceAddress = factory.newConcept(NS, 'Address');
     insuranceAddress.country = 'United Arab Emirates';
+    insuranceAddress.city = 'Dubai';
     insurance.address = insuranceAddress;
     insurance.name = 'Hilal';
 
     // create the vehicle
     let vehicle = factory.newResource(NS, 'Vehicle', '123456789123456');
-    vehicle.owner = factory.newRelationship(NS, 'Owner', '222222222222222');
+    vehicle.dealer = factory.newRelationship(NS, 'Dealership', '444444');
     vehicle.make = 'Toyota';
     vehicle.model = 'Yaris';
     vehicle.state = 'WAITING_CUSTOMS_CLEARANCE';
 
-    return getParticipantRegistry(NS + '.Owner')
-        .then(function(ownerRegistry) {
-            // add the growers
-            return ownerRegistry.addAll([seller, buyer]);
+    return getParticipantRegistry(NS + '.PrivateIndividual')
+        .then(function(privateIndividualRegistry) {
+            // add the private individuals (buyers)
+            return privateIndividualRegistry.addAll([buyer]);
+        })
+        .then(function() {
+            return getParticipantRegistry(NS + '.Dealership');
+        })
+        .then(function(dealershipRegistry) {
+            // add the dealerships
+            return dealershipRegistry.addAll([dealer]);
         })
         .then(function() {
             return getParticipantRegistry(NS + '.Regulator');
         })
         .then(function(regulatorRegistry) {
-            // add the importers
+            // add the regulators
             return regulatorRegistry.addAll([regulator]);
         })
         .then(function() {
             return getParticipantRegistry(NS + '.Customs');
         })
         .then(function(customsRegistry) {
-            // add the shippers
+            // add the customs
             return customsRegistry.addAll([customs]);
         })
         .then(function() {
             return getParticipantRegistry(NS + '.Bank');
         })
         .then(function(bankRegistry) {
-            // add the contracts
+            // add the banks
             return bankRegistry.addAll([bank]);
         })
         .then(function() {
             return getParticipantRegistry(NS + '.Insurance');
         })
         .then(function(insuranceRegistry) {
-            // add the shipments
+            // add the insurers
             return insuranceRegistry.addAll([insurance]);
         })
         .then(function() {
             return getAssetRegistry(NS + '.Vehicle');
         })
         .then(function(vehicleRegistry) {
-            // add the shipments
+            // add the vehicles
             return vehicleRegistry.addAll([vehicle]);
         });
 }

@@ -4,7 +4,7 @@
 
 rule VehicleOwnerRead {
     description: "Allow the owner of a vehicle read access to their vehicles"
-    participant(o): "digitalVehicleAssetNetwork.Owner"
+    participant(o): "digitalVehicleAssetNetwork.PrivateIndividual"
     operation: READ
     resource(v): "digitalVehicleAssetNetwork.Vehicle"
     condition: (v.owner.getIdentifier() === o.getIdentifier())
@@ -13,24 +13,26 @@ rule VehicleOwnerRead {
 
 rule VehicleOwnerUpdate {
     description: "Allow the owner of a vehicle update access to their vehicles"
-    participant(o): "digitalVehicleAssetNetwork.Owner"
+    participant(o): "digitalVehicleAssetNetwork.PrivateIndividual"
     operation: UPDATE
     resource(v): "digitalVehicleAssetNetwork.Vehicle"
     condition: (v.owner.getIdentifier() === o.getIdentifier())
     action: ALLOW
 }
-
+/*
+* this is not working need to debug
 rule Regulator {
     description: "Allow the regulator full access to the network"
     participant: "digitalVehicleAssetNetwork.Regulator"
     operation: ALL
     resource: "digitalVehicleAssetNetwork"
     action: ALLOW
-}
+}*/
+
 
 rule CustomsRead {
     description: "Allow the customs read access to the vehicles"
-    participant: "digitalVehicleAssetNetwork.Custom"
+    participant: "digitalVehicleAssetNetwork.Customs"
     operation: READ
     resource: "digitalVehicleAssetNetwork.Vehicle"
     action: ALLOW
@@ -38,7 +40,7 @@ rule CustomsRead {
 
 rule CustomsUpdate {
     description: "Allow the customs update access to the vehicles"
-    participant: "digitalVehicleAssetNetwork.Custom"
+    participant: "digitalVehicleAssetNetwork.Customs"
     operation: UPDATE
     resource: "digitalVehicleAssetNetwork.Vehicle"
     action: ALLOW
