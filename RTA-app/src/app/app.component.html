@@ -1,27 +1,70 @@
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">rta-network@1.0.7</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li class=""><a href="/">Home</a></li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assets
-        <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          
-            <li><a href="/Vehicle">Vehicle</a></li>
-          
-            <li><a href="/SalesContract">SalesContract</a></li>
-          
-            <li><a href="/InsuranceContract">InsuranceContract</a></li>
-          
-            <li><a href="/LoanContract">LoanContract</a></li>
-          
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+<md-sidenav-container>
+    <md-sidenav #sidenav mode="side">
+        <!-- sidenav content -->
+        <a href="/">
+            <md-icon class="example-icon">home</md-icon> Home
+        </a>
+        <a href="/Vehicle">
+            <md-icon class="example-icon">directions_car</md-icon> Vehicle
+        </a>
+    </md-sidenav>
+    <md-toolbar color="primary">
+        <span> rta-network@1.5.0 </span>
+        <span class="example-spacer"></span>
+        <button md-icon-button [mdMenuTriggerFor]="menu">
+          <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu #menu="mdMenu">
+            <a class="menu-link" href="/">
+                <button md-menu-item>
+                  <md-icon>home</md-icon>
+                  <span>Home</span>
+              </button>
+            </a>
+            <a class="menu-link" href="/">
+                <button md-menu-item>
+                  <md-icon>home</md-icon>
+                  <span>RTA</span>
+              </button>
+            </a>
+            <a class="menu-link" href="/">
+                <button md-menu-item>
+                  <md-icon>directions_boat</md-icon>
+                  <span>Customs</span>
+              </button>
+            </a>
+            <a class="menu-link" href="/">
+                <button md-menu-item>
+                  <md-icon>home</md-icon>
+                  <span>Dealership</span>
+              </button>
+            </a>
+            <a class="menu-link" href="/">
+                <button md-menu-item>
+                  <md-icon>home</md-icon>
+                  <span>Buyer</span>
+              </button>
+            </a>
+            <a class="menu-link" href="/">
+                <button md-menu-item>
+                  <md-icon>account_balance</md-icon>
+                  <span>Bank</span>
+              </button>
+            </a>
+            <a class="menu-link" href="/">
+                <button md-menu-item>
+                  <md-icon>work</md-icon>
+                  <span>Insurance</span>
+              </button>
+            </a>
+            <a class="menu-link" href="/Vehicle">
+                <button md-menu-item>
+              <md-icon>directions_car</md-icon>
+              <span>Vehicle</span>
+            </button>
+            </a>
+        </md-menu>
+    </md-toolbar>
+</md-sidenav-container>
 
 <router-outlet></router-outlet>

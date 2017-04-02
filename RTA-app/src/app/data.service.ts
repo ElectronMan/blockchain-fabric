@@ -17,51 +17,51 @@ export class DataService<Type> {
         this.headers.append('Accept', 'application/json');
     }
 
-    public getAll = (ns:string): Promise<Type[]> => {
+    public getAll = (ns: string): Promise<Type[]> => {
         console.log('GetAll ' + ns + ' to ' + this.actionUrl + ns);
         return this._http.get(this.actionUrl + ns)
             .toPromise()
-            .then((test) => {return test.json()})
+            .then((test) => { return test.json() })
             .catch(this.handleError);
     }
 
-    public getSingle = (ns:string, id: string): Promise<Type> => {
-        console.log('GetSingle ' + ns );
+    public getSingle = (ns: string, id: string): Promise<Type> => {
+        console.log('GetSingle ' + ns);
 
         return this._http.get(this.actionUrl + ns + '/' + id + this.resolveSuffix)
             .toPromise()
-            .then((test) => {return test.json()})
+            .then((test) => { return test.json() })
             .catch(this.handleError);
     }
 
-    public add = (ns:string, asset: Type): Promise<Type> => {
+    public add = (ns: string, asset: Type): Promise<Type> => {
         console.log('Entered DataService add')
-        console.log('Add ' + ns );
-        console.log('asset',asset)
+        console.log('Add ' + ns);
+        console.log('asset', asset)
 
         return this._http.post(this.actionUrl + ns, asset)
             .toPromise()
-            .then((test) => {return test.json()})
+            .then((test) => { return test.json() })
             .catch(this.handleError);
     }
 
     public update = (ns: string, id: string, itemToUpdate: Type): Promise<Type> => {
-        console.log('Update ' + ns );
-        console.log('what is the id?',id);
-        console.log('what is the updated item?',itemToUpdate);
-        console.log('what is the updated item?',JSON.stringify(itemToUpdate));
+        console.log('Update ' + ns);
+        console.log('what is the id?', id);
+        console.log('what is the updated item?', itemToUpdate);
+        console.log('what is the updated item?', JSON.stringify(itemToUpdate));
         return this._http.put(this.actionUrl + ns + '/' + id, itemToUpdate)
             .toPromise()
-            .then((test) => {return test.json()})
+            .then((test) => { return test.json() })
             .catch(this.handleError);
     }
 
-    public delete = (ns: string, id: string): Promise<Response> => {
-      console.log('Delete ' + ns );
+    public delete = (ns: string, id: string): Promise<Type> => {
+        console.log('Delete ' + ns);
 
-        return this._http.delete(this.actionUrl +ns + '/' + id)
+        return this._http.delete(this.actionUrl + ns + '/' + id)
             .toPromise()
-            .then((test) => {return test.json()})
+            .then((test) => { return test.json() })
             .catch(this.handleError);
     }
 

@@ -1,39 +1,63 @@
 // export namespace digitalVehicleAssetNetwork{
-   export enum vehicleState {
+   export enum VehicleState {
       WAITING_CUSTOMS_CLEARANCE,
       FOR_SALE,
       SOLD,
       REGISTERED,
    }
+   export enum Emirates {
+      ABU_DHABI,
+      DUBAI,
+      SHARJAH,
+   }
+   export enum InsuranceType {
+      THIRD_PARTY,
+      FULL,
+   }
+   export enum VehicleClassification {
+      SALOON,
+   }
    export class Vehicle {
-      chassisNumber: string;
-      make: string;
-      model: string;
-      licensePlate: string;
-      eTrafficNumber: string;
-      state: vehicleState;
-      owner: Owner;
+      chassisNo: string;
+      engineNo: string;
+      manufacturingYear: string;
+      countryOfOrigin: string;
+      vehicleType: string;
+      vehicleClassification: VehicleClassification;
+      color: string;
+      grossVehicleWeight: number;
+      emptyWeight: number;
+      state: VehicleState;
+      vehicleLicense: VehicleLicense;
       salesContract: SalesContract;
       insuranceContract: InsuranceContract;
       loanContract: LoanContract;
+      dealer: Dealership;
+   }
+   export class VehicleLicense {
+      eTrafficNumber: string;
+      trafficPlateNo: string;
+      placeOfIssue: Emirates;
+      expDate: Date;
+      owner: PrivateIndividual;
    }
    export class SalesContract {
-      salesID: string;
       price: number;
-      buyer: Owner;
-      seller: Owner;
+      buyer: PrivateIndividual;
+      seller: Dealership;
       vehicle: Vehicle;
    }
    export class InsuranceContract {
-      insuranceID: string;
+      policyNo: string;
+      type: InsuranceType;
       price: number;
-      buyer: Owner;
+      expiryDate: Date;
+      buyer: PrivateIndividual;
       insurer: Insurance;
       vehicle: Vehicle;
    }
    export class LoanContract {
-      loanID: string;
-      lendee: Owner;
+      lendee: PrivateIndividual;
       lender: Bank;
       vehicle: Vehicle;
    }
@@ -41,17 +65,24 @@
       city: string;
       country: string;
       street: string;
-      zip: string;
+      postOfficeBox: string;
    }
-   export class Owner {
-      emiratesID: string;
+   export abstract class Owner {
       email: string;
-      firstName: string;
-      lastName: string;
       mobileNumber: string;
       address: Address;
+   }
+   export class PrivateIndividual extends Owner {
+      emiratesID: string;
+      firstName: string;
+      lastName: string;
       passportNumber: string;
-      licenseNumber: string;
+      carLicenseNumber: string;
+      nationality: string;
+   }
+   export class Dealership extends Owner {
+      name: string;
+      commercialLicenseNumber: string;
    }
    export abstract class Entity {
       email: string;
@@ -74,29 +105,31 @@
    export class buyVehicle {
       transactionID: string;
       price: number;
-      buyer: Owner;
-      seller: Owner;
+      buyer: PrivateIndividual;
+      seller: Dealership;
       vehicle: Vehicle;
       timestamp: Date;
    }
    export class buyInsurance {
       transactionID: string;
       price: number;
-      buyer: Owner;
+      policyNo: string;
+      type: InsuranceType;
+      buyer: PrivateIndividual;
       insurer: Insurance;
       vehicle: Vehicle;
       timestamp: Date;
    }
    export class getABankLoan {
       transactionID: string;
-      lendee: Owner;
+      lendee: PrivateIndividual;
       lender: Bank;
       vehicle: Vehicle;
       timestamp: Date;
    }
    export class register {
       transactionID: string;
-      licensePlate: string;
+      trafficPlateNo: string;
       eTrafficNumber: string;
       vehicle: Vehicle;
       timestamp: Date;

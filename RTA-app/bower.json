@@ -1,6 +1,6 @@
 {
   "name": "RTA-app",
-  "description": "RTA mondo registration and renewal for vehicles",
+  "description": "RTA car registration blockchain",
   "main": "index.js",
   "authors": [
     "Blockchain Mondo Blockchai Mondo"

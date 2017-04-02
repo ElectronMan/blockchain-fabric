@@ -1,340 +1,423 @@
+<!--
 <div class="modal fade" id="addAssetModal" tabindex="-1" role="dialog" aria-labelledby="addAssetModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addAssetModalLabel">Add Asset</h4>
-      </div>
-      <form [formGroup]="myForm">
-        <div class="modal-body">
-
-
-          
-            <div class="form-group text-left">
-              <label for="chassisNumber">chassisNumber</label>
-
-              
-                <input formControlName="chassisNumber" type="text" class="form-control">
-              
-
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addAssetModalLabel">Add Asset</h4>
             </div>
-          
-            <div class="form-group text-left">
-              <label for="make">make</label>
-
-              
-                <input formControlName="make" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="model">model</label>
-
-              
-                <input formControlName="model" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="licensePlate">licensePlate</label>
-
-              
-                <input formControlName="licensePlate" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="eTrafficNumber">eTrafficNumber</label>
-
-              
-                <input formControlName="eTrafficNumber" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="state">state</label>
-
-              
-                  <textarea formControlName="state" class="form-control" rows="3"></textarea>
-
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="owner">owner</label>
-
-              
-                  <textarea formControlName="owner" class="form-control" rows="3"></textarea>
-
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="salesContract">salesContract</label>
-
-              
-                  <textarea formControlName="salesContract" class="form-control" rows="3"></textarea>
-
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="insuranceContract">insuranceContract</label>
-
-              
-                  <textarea formControlName="insuranceContract" class="form-control" rows="3"></textarea>
-
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="loanContract">loanContract</label>
-
-              
-                  <textarea formControlName="loanContract" class="form-control" rows="3"></textarea>
-
-              
-
-            </div>
-          
+            <form [formGroup]="myForm">
+                <div class="modal-body">
 
 
+
+                    <div class="form-group text-left">
+                        <label for="chassisNo">chassisNo</label>
+
+
+                        <input formControlName="chassisNo" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="engineNo">engineNo</label>
+
+
+                        <input formControlName="engineNo" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="manufacturingYear">manufacturingYear</label>
+
+
+                        <input formControlName="manufacturingYear" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="countryOfOrigin">countryOfOrigin</label>
+
+
+                        <input formControlName="countryOfOrigin" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="vehicleType">vehicleType</label>
+
+
+                        <input formControlName="vehicleType" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="vehicleClassification">vehicleClassification</label>
+
+
+                        <textarea formControlName="vehicleClassification" class="form-control" rows="3"></textarea>
+
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="color">color</label>
+
+
+                        <input formControlName="color" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="grossVehicleWeight">grossVehicleWeight</label>
+
+
+                        <input formControlName="grossVehicleWeight" type="number" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="emptyWeight">emptyWeight</label>
+
+
+                        <input formControlName="emptyWeight" type="number" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="state">state</label>
+
+
+                        <textarea formControlName="state" class="form-control" rows="3"></textarea>
+
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="vehicleLicense">vehicleLicense</label>
+
+
+                        <textarea formControlName="vehicleLicense" class="form-control" rows="3"></textarea>
+
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="salesContract">salesContract</label>
+
+
+                        <textarea formControlName="salesContract" class="form-control" rows="3"></textarea>
+
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="insuranceContract">insuranceContract</label>
+
+
+                        <textarea formControlName="insuranceContract" class="form-control" rows="3"></textarea>
+
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="loanContract">loanContract</label>
+
+
+                        <textarea formControlName="loanContract" class="form-control" rows="3"></textarea>
+
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="dealer">dealer</label>
+
+
+                        <textarea formControlName="dealer" class="form-control" rows="3"></textarea>
+
+
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button (click)="addAsset(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <button (click)="addAsset(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 
 
 
 
 <div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="updateAssetModalLabel">Update Asset</h4>
-      </div>
-      <form [formGroup]="myForm">
-        <div class="modal-body">
-
-
-          
-            <div class="form-group text-left">
-              <label for="chassisNumber">chassisNumber</label>
-
-              
-                <input [ngModel]="chassisNumber"formControlName="chassisNumber" type="text" class="form-control">
-              
-
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="updateAssetModalLabel">Update Asset</h4>
             </div>
-          
-            <div class="form-group text-left">
-              <label for="make">make</label>
-
-              
-                <input [ngModel]="make"formControlName="make" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="model">model</label>
-
-              
-                <input [ngModel]="model"formControlName="model" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="licensePlate">licensePlate</label>
-
-              
-                <input [ngModel]="licensePlate"formControlName="licensePlate" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="eTrafficNumber">eTrafficNumber</label>
-
-              
-                <input [ngModel]="eTrafficNumber"formControlName="eTrafficNumber" type="text" class="form-control">
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="state">state</label>
-
-              
-                  <textarea [ngModel]="state" formControlName="state" class="form-control" rows="3"></textarea>
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="owner">owner</label>
-
-              
-                  <textarea [ngModel]="owner" formControlName="owner" class="form-control" rows="3"></textarea>
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="salesContract">salesContract</label>
-
-              
-                  <textarea [ngModel]="salesContract" formControlName="salesContract" class="form-control" rows="3"></textarea>
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="insuranceContract">insuranceContract</label>
-
-              
-                  <textarea [ngModel]="insuranceContract" formControlName="insuranceContract" class="form-control" rows="3"></textarea>
-              
-
-            </div>
-          
-            <div class="form-group text-left">
-              <label for="loanContract">loanContract</label>
-
-              
-                  <textarea [ngModel]="loanContract" formControlName="loanContract" class="form-control" rows="3"></textarea>
-              
-
-            </div>
-          
+            <form [formGroup]="myForm">
+                <div class="modal-body">
 
 
+
+                    <div class="form-group text-left">
+                        <label for="chassisNo">chassisNo</label>
+
+
+                        <input [ngModel]="chassisNo" formControlName="chassisNo" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="engineNo">engineNo</label>
+
+
+                        <input [ngModel]="engineNo" formControlName="engineNo" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="manufacturingYear">manufacturingYear</label>
+
+
+                        <input [ngModel]="manufacturingYear" formControlName="manufacturingYear" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="countryOfOrigin">countryOfOrigin</label>
+
+
+                        <input [ngModel]="countryOfOrigin" formControlName="countryOfOrigin" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="vehicleType">vehicleType</label>
+
+
+                        <input [ngModel]="vehicleType" formControlName="vehicleType" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="vehicleClassification">vehicleClassification</label>
+
+
+                        <textarea [ngModel]="vehicleClassification" formControlName="vehicleClassification" class="form-control" rows="3"></textarea>
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="color">color</label>
+
+
+                        <input [ngModel]="color" formControlName="color" type="text" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="grossVehicleWeight">grossVehicleWeight</label>
+
+
+                        <input [ngModel]="grossVehicleWeight" formControlName="grossVehicleWeight" type="number" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="emptyWeight">emptyWeight</label>
+
+
+                        <input [ngModel]="emptyWeight" formControlName="emptyWeight" type="number" class="form-control">
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="state">state</label>
+
+
+                        <textarea [ngModel]="state" formControlName="state" class="form-control" rows="3"></textarea>
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="vehicleLicense">vehicleLicense</label>
+
+
+                        <textarea [ngModel]="vehicleLicense" formControlName="vehicleLicense" class="form-control" rows="3"></textarea>
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="salesContract">salesContract</label>
+
+
+                        <textarea [ngModel]="salesContract" formControlName="salesContract" class="form-control" rows="3"></textarea>
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="insuranceContract">insuranceContract</label>
+
+
+                        <textarea [ngModel]="insuranceContract" formControlName="insuranceContract" class="form-control" rows="3"></textarea>
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="loanContract">loanContract</label>
+
+
+                        <textarea [ngModel]="loanContract" formControlName="loanContract" class="form-control" rows="3"></textarea>
+
+
+                    </div>
+
+                    <div class="form-group text-left">
+                        <label for="dealer">dealer</label>
+
+
+                        <textarea [ngModel]="dealer" formControlName="dealer" class="form-control" rows="3"></textarea>
+
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button (click)="updateAsset(myForm)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <button (click)="updateAsset(myForm)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 
 
 
 <div class="modal fade" id="deleteAssetModal" tabindex="-1" role="dialog" aria-labelledby="deleteAssetModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="deleteAssetModalLabel">Delete Asset</h4>
-      </div>
-      <form [formGroup]="myForm" (ngSubmit)="deleteAsset()">
-        <div class="modal-body">
-          Are you sure you want to delete this asset?
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteAssetModalLabel">Delete Asset</h4>
+            </div>
+            <form [formGroup]="myForm" (ngSubmit)="deleteAsset()">
+                <div class="modal-body">
+                    Are you sure you want to delete this asset?
+                </div>
+                <div class="modal-footer">
+                    <button (click)="deleteAsset()" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <button (click)="deleteAsset()" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
+-->
 
 
 
 
 
 
-
-
-
-
-
-<div class="container">
-  <h1 id='assetName'>Vehicle</h1>
-  <div class="row">
-    <div class="col-md-12 text-right">
-      <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">Add Asset</button>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-bordered table-responsive table-striped">
-        <thead class="thead">
-          <tr class="thead-cols">
-            
-                <th class="info">chassisNumber</th>
-            
-                <th class="info">make</th>
-            
-                <th class="info">model</th>
-            
-                <th class="info">licensePlate</th>
-            
-                <th class="info">eTrafficNumber</th>
-            
-                <th class="info">state</th>
-            
-                <th class="info">owner</th>
-            
-                <th class="info">salesContract</th>
-            
-                <th class="info">insuranceContract</th>
-            
-                <th class="info">loanContract</th>
-            
-              <th class="info">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let asset of allAssets">
-
-            
-                <td>{{asset.chassisNumber}}</td>
-            
-                <td>{{asset.make}}</td>
-            
-                <td>{{asset.model}}</td>
-            
-                <td>{{asset.licensePlate}}</td>
-            
-                <td>{{asset.eTrafficNumber}}</td>
-            
-                <td>{{asset.state}}</td>
-            
-                <td>{{asset.owner}}</td>
-            
-                <td>{{asset.salesContract}}</td>
-            
-                <td>{{asset.insuranceContract}}</td>
-            
-                <td>{{asset.loanContract}}</td>
-            
-            <td>
-              <button (click)="getForm(asset.chassisNumber);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>
-
-              <button (click)="setId(asset.chassisNumber);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAssetModal">Delete Asset</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+<md-grid-list cols="3" rowHeight="400px">
+    <md-grid-tile *ngFor="let asset of allAssets" [colspan]="1" [rowspan]="3" [style.background]="lightblue">
+        <md-card class="example-card">
+            <md-card-header>
+                <div md-card-avatar class="example-header-image"></div>
+                <md-card-title>{{asset.chassisNo}}</md-card-title>
+                <md-card-subtitle>{{asset.engineNo}}</md-card-subtitle>
+            </md-card-header>
+            <img md-card-image src="assets/car.jpg">
+            <md-card-content>
+                <md-list>
+                    <h3 md-subheader>Folders</h3>
+                    <md-list-item>
+                        <md-icon md-list-avatar>folder</md-icon>
+                        <h4 md-line>Manufacturing Year</h4>
+                        <p md-line> {{asset.manufacturingYear | date}} </p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-avatar>folder</md-icon>
+                        <h4 md-line>Country Of Origin</h4>
+                        <p md-line> {{asset.countryOfOrigin}} </p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-avatar>folder</md-icon>
+                        <h4 md-line>Vehicle Type</h4>
+                        <p md-line> {{asset.vehicleType}} </p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-avatar>folder</md-icon>
+                        <h4 md-line>Vehicle Classification</h4>
+                        <p md-line> {{asset.vehicleClassification}} </p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-avatar>folder</md-icon>
+                        <h4 md-line>Color</h4>
+                        <p md-line [style.color]='asset.color'> {{asset.color}} </p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-avatar>folder</md-icon>
+                        <h4 md-line>grossVehicleWeight</h4>
+                        <p md-line> {{asset.grossVehicleWeight}} </p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-avatar>folder</md-icon>
+                        <h4 md-line>emptyWeight</h4>
+                        <p md-line> {{asset.emptyWeight}} </p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-avatar>folder</md-icon>
+                        <h4 md-line>state</h4>
+                        <p md-line> {{asset.state}} </p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-avatar>folder</md-icon>
+                        <h4 md-line>dealer</h4>
+                        <p md-line> {{asset.dealer}} </p>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                </md-list>
+            </md-card-content>
+            <md-card-actions>
+                <button md-button>CLEAR CUSTOMS</button>
+            </md-card-actions>
+        </md-card>
+    </md-grid-tile>
+</md-grid-list>
